@@ -81,9 +81,11 @@ keys = [
     Key([mod, "control", "shift"], "s", lazy.spawn(" systemctl suspend"), desc="Suspend sys"),
     Key([mod, "control", "shift"], "q", lazy.spawn(" shutdown now"), desc="Shutdown sys"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "z", lazy.spawn(" network.sh"), desc="wifi applet"), 
     Key([mod], "b", lazy.spawn(" brave"), desc="Spawn brave"),
     Key([mod], "m", lazy.spawn(" spotify"), desc="Spawn spotify"),
-    Key([mod], "n", lazy.spawn(" discord"), desc="Spawn discord"),
+    Key([mod], "a", lazy.spawn(" rofi -show drun"), desc="Spawn rofi"),
+    Key([mod], "n", lazy.spawn(" chromium"), desc="Spawn chromium"),
 ]
 
 '''groups = [Group("MUS", layout='monadtall'),
@@ -118,13 +120,13 @@ for i in groups:
 
 
 layouts = [
-    layout.Columns(border_focus_stack=['#d75f5f', '#8f3d3d'], border_width=2, margin=8),
+    layout.Columns(border_focus_stack=['#696969', '000000'], border_width=2, margin=2),
     #layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-     layout.MonadTall(border_focus_stack=['#d75f5f', '#8f3d3d'], border_width=2, margin=8),
+    # layout.MonadTall(border_focus_stack=['#d75f5f', '#8f3d3d'], border_width=2, margin=8),
      layout.Max(),
     # layout.MonadWide(),
     # layout.RatioTile(),
@@ -138,6 +140,7 @@ widget_defaults = dict(
     font='Source Code Pro',
     fontsize=12,
     padding=3,
+    fontcolor='f3e0b8'
 )
 extension_defaults = widget_defaults.copy()
 
@@ -145,24 +148,27 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(font='Source Code Pro'),
                 widget.GroupBox(),
                 widget.Prompt(),
-                widget.WindowName(font='Source Code Pro'),
+                widget.Spacer(),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.Clock(),
-                widget.NvidiaSensors(),
-                widget.HDDBusyGraph(),
-                widget.Net(interface="enp9s0",format=' Wifi:{down}  ↓↑{up} '),
-                widget.Wlan(),
-                widget.PulseVolume(),
-                widget.CPUGraph(),
-                widget.Systray(),
+                 widget.Sep(linewidth=5),
+                 widget.Clock(),
+                 widget.HDDBusyGraph(border_color='f3e0b8',graph_color='bd2523',fill_colo
+                 widget.PulseVolume(),
+                 widget.Sep(linewidth=5),
+                 widget.NvidiaSensors(),
+                 widget.Sep(linewidth=5),
+                 widget.Net(interface='wlo1',format=' Wifi: {down}↓↑{up} '),
+                 widget.Wlan(interface='wlo1',format='{percent:2.0%}'),
+                 widget.NetGraph(border_color='f3e0b8',graph_color='bd2523',fill_color='e
+                 widget.Sep(linewidth=5),                                                
+                 widget.Systray(),
                 
             ],
             24,
