@@ -35,7 +35,7 @@ shopt -s autocd
 shopt -s cdspell
 alias ls='ls -la --color=auto'
 alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+PS1='\033[1;31m\]\u@\033[1;36m\]\h \033[1;31m\]\W\033[0m\] \$ '
 #export PATH=$PATH:/home/xenon/projects/pswdman/pswdman
 #PS1="\n \[\033[0;34m\]┌─────(\[\033[1;35m\]\u\[\033[0;34m\])─────(\[\033[1;32m\]\w\[\033[0;34m\]) \n └> \[\033[1;36m\]\$ \[\033[0m\]"
 #PS1="$PS1"'\[\e[0m\]' # reset all
