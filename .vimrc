@@ -4,33 +4,25 @@ set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
-set smartindent
 set nu
+set smartindent
 set undodir=~/.vim/undodir
 set undofile
-set nowrap
 set smartcase
 set noswapfile
 set nobackup
 set cursorline
 
-call plug#begin('~/.vim/plugged')
+ call plug#begin('~/.vim/plugged')
+  Plug 'preservim/nerdtree'
+ call plug#end()
 
-Plug 'morhetz/gruvbox'
-Plug 'https://github.com/Valloric/YouCompleteMe.git'
-Plug 'lyuts/vim-rtags'
-Plug 'https://github.com/kien/ctrlp.vim.git'
-Plug 'mbbill/undotree'
-Plug 'https://github.com/srcery-colors/srcery-vim'
+autocmd VimEnter * NERDTree | wincmd p
 
-call plug#end()
-
-let g:srcery_bg_passthrough = 1
-colorscheme srcery
-set background=dark
-let g:lightline = {
-      \ 'colorscheme': 'srcery',
-      \ }
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+nnoremap <C-q> :NERDTreeFocus<CR>
 
 
 
