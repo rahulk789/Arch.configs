@@ -1,28 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
 import os
 import re
 import socket
@@ -72,7 +47,7 @@ keys = [
     # multiple stack panes
     
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(),desc="Toggle between split and unsplit sides of stack"),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("kitty"), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
@@ -81,10 +56,8 @@ keys = [
     Key([mod, "control", "shift"], "s", lazy.spawn(" systemctl suspend"), desc="Suspend sys"),
     Key([mod, "control", "shift"], "q", lazy.spawn(" shutdown now"), desc="Shutdown sys"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "z", lazy.spawn(" network.sh"), desc="wifi applet"), 
-    Key([mod], "b", lazy.spawn(" brave"), desc="Spawn brave"),
-    Key([mod], "m", lazy.spawn(" spotify"), desc="Spawn spotify"),
-    Key([mod], "a", lazy.spawn(" rofi -show drun"), desc="Spawn rofi"),
+#   Key([mod], "z", lazy.spawn(" network.sh"), desc="wifi applet"), 
+#   Key([mod], "a", lazy.spawn(" rofi -show drun"), desc="Spawn rofi"),
     Key([mod], "n", lazy.spawn(" chromium"), desc="Spawn chromium"),
 ]
 
@@ -120,7 +93,7 @@ for i in groups:
 
 
 layouts = [
-    layout.Columns(border_focus_stack=['#696969', '000000'], border_width=2, margin=2),
+    layout.Columns(border_focus='#808080',border_normal='000000', border_width=2, margin=2),
     #layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -140,7 +113,7 @@ widget_defaults = dict(
     font='Source Code Pro',
     fontsize=12,
     padding=3,
-    fontcolor='f3e0b8'
+    fontcolor='ebdbb2'
 )
 extension_defaults = widget_defaults.copy()
 
@@ -159,14 +132,14 @@ screens = [
                 ),
                  widget.Sep(linewidth=5),
                  widget.Clock(),
-                 widget.HDDBusyGraph(border_color='f3e0b8',graph_color='bd2523',fill_colo
+                 widget.HDDBusyGraph(border_color='808080',graph_color='cc231c',fill_color='fb4833'),
                  widget.PulseVolume(),
                  widget.Sep(linewidth=5),
                  widget.NvidiaSensors(),
                  widget.Sep(linewidth=5),
                  widget.Net(interface='wlo1',format=' Wifi: {down}↓↑{up} '),
-                 widget.Wlan(interface='wlo1',format='{percent:2.0%}'),
-                 widget.NetGraph(border_color='f3e0b8',graph_color='bd2523',fill_color='e
+                 # widget.Wlan(interface='wlo1',format='{percent:2.0%}'),
+                 widget.NetGraph(border_color='808080',graph_color='cc231c',fill_color='fb4833'),
                  widget.Sep(linewidth=5),                                                
                  widget.Systray(),
                 
@@ -199,7 +172,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
-])
+],border_focus='#8080803',border_normal='#000000')
 auto_fullscreen = False
 focus_on_window_activation = "smart"
 reconfigure_screens = False
