@@ -1,0 +1,24 @@
+[user]
+	email = rahul.u.india@gmail.com
+	name = rahulk789
+[commit]
+	gpgsign = true
+[alias]
+	a = add
+	bd = branch -D
+	bdr = push -d origin
+	br = branch -a
+	cl = clone
+	fork = "!git clone \"$1\" && git remote add upstream \"$2\" #"
+	cm = commit -s
+	cma = commit --amend
+	cman = commit --amend --no-edit
+	d = diff
+	l = log
+	lo = log --oneline
+	pl = pull
+	ps = push
+	s = status
+	up = "!BRANCH=\"${1:-\"main\"}\"; git pull upstream $BRANCH && git push #"
+[pull]
+	rebase = true
