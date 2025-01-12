@@ -16,15 +16,37 @@ hi CursorLine cterm=NONE ctermbg=black
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'ficcdaf/ashen.nvim'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'sho-87/kanagawa-paper.nvim'
+Plug 'sainnhe/gruvbox-material'
+Plug 'puremourning/vimspector'
 Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
+Plug 'psliwka/vim-smoothie'
+Plug 'David-Kunz/gen.nvim'
+"Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
+Plug 'josa42/coc-sh'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'sebdah/vim-delve'
 call plug#end()
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+colorscheme kanagawa
+
+highlight Normal guibg=none
+highlight NonText guibg=none
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+
 
 filetype plugin indent on
 nnoremap <C-s> :Files<CR>
@@ -40,6 +62,7 @@ let g:fzf_layout = { 'down': '~33%' }
 " command! -nargs=* Rg call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
 " Use FZF's live grep with ripgrep to search for text dynamically in files
+" Most probably you wont be using this and you would be using gr gd stuff!!
 noremap <C-g> :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, fzf#vim#with_preview(), 0)<CR>
 
 let g:airline#extensions#tabline#enabled = 1
@@ -58,9 +81,8 @@ inoremap <expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 autocmd BufWritePre *.go :call CocAction('format')
 
-nnoremap <C-a> :G add .<CR>
-nnoremap <C-c> :G commit -m "<C-R>=input('Commit message: ')<CR>"<CR>
-nnoremap <C-p> :G push origin <C-R>=input('Branch name: ')<CR><CR>
+nnoremap <C-p> :Commentary<CR>
+vnoremap <C-p> :Commentary<CR>
 
 nnoremap j gj
 nnoremap gj j
