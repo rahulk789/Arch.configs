@@ -79,7 +79,13 @@
     powerManagement.enable = true;
     open = false;  # true if you're using open-source kernel module
   };
-
+  security.wrappers.criu = {
+    source = "${pkgs.criu}/bin/criu";
+    capabilities = "cap_checkpoint_restore+ep";
+    owner = "root";
+    group = "root";
+    permissions = "0755";
+  };
   services.picom = {
     enable = true;
     backend = "xrender";
@@ -106,7 +112,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.xenon = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -116,8 +122,10 @@
   nixpkgs.config.allowUnfree = true;
   programs.firefox.enable = true;
   programs.chromium.enable = true;
+  programs.nix-ld.enable = true;
   nixpkgs.config.chromium.enableWideVine = true;
 
+  programs.criu.enable = true;
   fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts
@@ -129,39 +137,39 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    neovim
-    git
-    wget
-    alacritty
-    nitrogen
+    neovim duckdb bash-language-server shellcheck shfmt
+    git zulu # java actually
+    wget usbutils nmap docker-compose
+    alacritty runc cri-tools containerd
+    nitrogen restate
     pass mesa-demos # nvidia
-    rustc rustup rustfmt vimPlugins.coc-rust-analyzer vimPlugins.coc-nvim rust-analyzer nodejs yarn
+    rustc rustup rustfmt vimPlugins.coc-rust-analyzer vimPlugins.coc-nvim vimPlugins.none-ls-nvim rust-analyzer nodejs yarn
     go libgcc pkg-config gnumake gcc bear vcpkg cmake clang clang-tools llvm gopls nil glow
     cudaPackages.cudatoolkit zip unzip ninja
     python314
-    chromium osu-lazer
-    firefox
-    htop kubernetes-helm
-    screenfetch
-    sqlx-cli openssl openssl.dev sqlite
+    chromium osu-lazer kitty
+    firefox hmcl prettierd
+    htop kubernetes-helm betterdiscordctl
+    screenfetch yaml-language-server
+    sqlx-cli openssl openssl.dev sqlite poetry
     cargo postgresql ripgrep
-    rofi
-    dmenu watchexec
-    pavucontrol
-    lxappearance
+    rofi atlauncher criu
+    dmenu watchexec lsd yewtube
+    pavucontrol asciinema asciinema-agg
+    lxappearance gdb yt-dlp gpt-cli stream-rip
     noto-fonts vscode-langservers-extracted
     noto-fonts-cjk-sans cmatrix weechat
     noto-fonts-emoji
-    jetbrains-mono
+    jetbrains-mono bats
     folly gflags glog grpc libevent libunwind libuv protobuf
     jq xclip fzf flex bison autoconf automake libtool gnum4 elfutils
     home-manager slack terraform
     arc-theme nomacs gimp newsboat
     orchis-theme operator-sdk kubebuilder
     nordic just caddy parallel
-    ranger vlc mpv pnpm yewtube lynx w3m tuir neomutt feh
+    ranger vlc mpv yewtube lynx w3m tuir neomutt feh pnpm
     nemo simplescreenrecorder
-    flameshot obs-studio kubectl eksctl awscli
+    flameshot obs-studio kubectl eksctl awscli cloudsmith-cli
     (sddm-astronaut.override {
         themeConfig = {
           FontSize = "12";
@@ -185,7 +193,6 @@
         };
       })
   ];
-
   environment.variables = {
     EDITOR = "nvim";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
